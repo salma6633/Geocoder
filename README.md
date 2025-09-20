@@ -1,43 +1,52 @@
-# Directions API Server with Kuwaiti Geocoding
+# Directions API Server with Kuwaiti Geocoding and ETA Prediction
 
 ## Overview
-This repository contains an Express.js server for the Directions application, providing estimated time of arrival (ETA) predictions and geocoding for Kuwaiti addresses. The geocoding system, developed during an internship, uses the `HybridXGBFAISSGeocoder` and `EnhancedXGBoostGeocoder` to predict latitude and longitude from address inputs, combining XGBoost regression, FAISS similarity search, and fuzzy matching for high accuracy.
+This repository hosts a production-ready Express.js server for the Directions application, integrating geocoding for Kuwaiti addresses with Estimated Time of Arrival (ETA) predictions. Developed during an internship, the system combines the `HybridXGBFAISSGeocoder` and `EnhancedXGBoostGeocoder` to convert textual addresses into coordinates and predict travel times based on location, time, and day. The solution leverages machine learning, text processing, and geospatial analysis for high accuracy and scalability.
 
 ## Features
-- **ETA Prediction**: Estimates travel time based on pickup/drop-off coordinates, hour, and day.
-- **Geocoding**: Converts Kuwaiti addresses (e.g., area, block, street) into coordinates using:
-  - `HybridXGBFAISSGeocoder`: Combines XGBoost with FAISS for refined predictions.
-  - `EnhancedXGBoostGeocoder`: Uses XGBoost for latitude/longitude regression.
-- **Text Processing**: Handles noisy addresses with `SentenceTransformer` embeddings and `FuzzyWuzzy` matching.
-- **Geospatial Support**: Uses `GeoHash2` for efficient location queries.
-- **Performance**: Achieves ~240m geocoding error, optimized for speed and scalability.
+- **Geocoding and ETA Prediction**: 
+  - Converts Kuwaiti addresses (e.g., area, block, street) into coordinates and predicts ETA using a single pipeline.
+  - Uses `HybridXGBFAISSGeocoder` to combine XGBoost regression with FAISS similarity search for refined coordinate predictions.
+  - Employs `EnhancedXGBoostGeocoder` for multi-output regression to predict latitude/longitude.
+- **Text Processing**: Handles noisy addresses with `SentenceTransformer` (`paraphrase-MiniLM-L6-v2`) embeddings and `FuzzyWuzzy` with `RapidFuzz` for entity resolution.
+- **Geospatial Support**: Utilizes `GeoHash2` for efficient location encoding and proximity queries.
+- **Performance**: Achieves ~240m geocoding error and optimized ETA predictions, with caching and tuned XGBoost parameters for speed.
+- **Visualization**: Includes Matplotlib tools to analyze geocoding accuracy and ETA patterns across Kuwaiti regions (e.g., Hawalli, Salmiya).
 
 ## Project Structure
-```
+
 ├── server/                       # Backend server
 │   ├── src/                      # Source code
 │   │   ├── api/                  # API endpoints
+│   │   │   ├── controllers/      # Request handlers
+│   │   │   ├── middlewares/      # Express middlewares
+│   │   │   └── routes/           # API routes
 │   │   ├── config/               # Configuration
 │   │   ├── models/               # ML models
 │   │   ├── scripts/              # Python scripts
-│   │   │   ├── geocoder.py       # Geocoding logic
-│   │   │   ├── predict_*.py      # Prediction scripts
+│   │   │   ├── geocoder.py       # Geocoding and ETA logic
+│   │   │   ├── predict_combined_address.py  # Combined address and ETA prediction
+│   │   │   ├── predict_eta_address.py      # Address-based ETA prediction
+│   │   │   ├── predict_eta.py             # ETA prediction
 │   │   ├── services/             # Business logic
 │   │   ├── utils/                # Utilities
+│   │   ├── app.js                # Main Node.js app
+│   │   ├── server.js             # Server entry point
 │   ├── .env                      # Environment variables
 │   ├── requirements.txt          # Python dependencies
 │   ├── package.json              # Node.js dependencies
 │   ├── eta_model.pkl             # ETA model
 │   ├── distance_model.pkl        # Distance model
+│   ├── combinedModel.py          # Combined geocoding and ETA model
 ├── README.md                     # This file
-```
+
 
 ## Installation
 1. **Clone the Repository**:
-   ```bash
+   
    git clone https://github.com/<your-username>/<repo-name>.git
    cd <repo-name>
-   ```
+   
 
 2. **Install Python Dependencies**:
    ```bash
@@ -74,10 +83,11 @@ This repository contains an Express.js server for the Directions application, pr
    ```
    - Access at `http://localhost:3000`.
 
-2. **Run Geocoding**:
+2. **Run Geocoding and ETA Prediction**:
    ```bash
    python server/src/scripts/geocoder.py
    ```
+   - Processes addresses and predicts coordinates with ETA.
 
 3. **Test Predictions**:
    ```bash
@@ -87,27 +97,25 @@ This repository contains an Express.js server for the Directions application, pr
 ## API Endpoints
 - **GET /**: Welcome message.
   ```json
-  { "message": "Welcome to the Express server API", "version": "v1" }
+  { "message": "Welcome to the Directions API", "version": "v1" }
   ```
-- **POST /api/v1/eta**: Predicts ETA.
+- **POST /api/v1/eta**: Predicts ETA and geocodes addresses.
   ```json
   {
-    "pickup_lat": 29.34, "pickup_lon": 48.09,
-    "drop_lat": 29.29, "drop_lon": 47.89,
-    "hour_of_day": 17, "day_of_week": "Wednesday"
+    "address": "Salmiya, Block 3, Street 4",
+    "dropoff_address": "Hawalli, Block 1, Street 2",
+    "hour_of_day": 17,
+    "day_of_week": "Wednesday"
   }
   ```
   Response:
   ```json
-  { "eta_minutes": 25.5, "distance_km": 18.2, ... }
-  ```
-- **POST /api/v1/geocode**: Geocodes Kuwaiti addresses (e.g., "Hawalli, Block 1, Street 2").
-  ```json
-  { "address": "Salmiya, Block 3, Street 4" }
-  ```
-  Response:
-  ```json
-  { "latitude": 29.33, "longitude": 48.07, "confidence": 0.95 }
+  {
+    "pickup": { "lat": 29.33, "lon": 48.07 },
+    "dropoff": { "lat": 29.34, "lon": 48.09 },
+    "eta_minutes": 25.5,
+    "distance_km": 18.2
+  }
   ```
 - **GET /api/v1/status**: Server status.
   ```json
