@@ -1,3 +1,8 @@
 # Exclude large data files
 Core/*.csv
 Core/orders.json
+"server/venv/" 
+"server/models/*.npy" 
+"server/models/*.index" 
+"server/models/*.dll" 
+"server/models/*.safetensors" 
