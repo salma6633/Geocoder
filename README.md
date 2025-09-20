@@ -24,10 +24,6 @@ This repository contains a production-ready Express.js server for the Etijahat D
 │   │   ├── config/               # Configuration
 │   │   ├── models/               # ML models
 │   │   ├── scripts/              # Python scripts
-│   │   │   ├── geocoder.py       # Geocoding and ETA logic
-│   │   │   ├── predict_combined_address.py  # Address-based combined prediction
-│   │   │   ├── predict_eta_address.py      # Address-based ETA prediction
-│   │   │   ├── predict_eta.py             # Coordinate-based ETA prediction
 │   │   ├── services/             # Business logic
 │   │   ├── utils/                # Utilities
 │   │   ├── app.js                # Main Node.js app
