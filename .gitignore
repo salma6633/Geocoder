@@ -6,3 +6,4 @@ Core/orders.json
 "server/models/*.index" 
 "server/models/*.dll" 
 "server/models/*.safetensors" 
+"server/models" 
