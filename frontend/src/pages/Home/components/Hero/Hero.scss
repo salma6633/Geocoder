@@ -1,0 +1,114 @@
+@use 'sass:color';
+@use '../../../../styles/variables' as *;
+
+.hero-section {
+  padding: 5rem 0;
+  background: linear-gradient(135deg, $white 0%, $secondary-color 100%);
+  
+  .hero-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    
+    @media (max-width: $breakpoint-md) {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  .hero-text {
+    h1 {
+      font-size: 3rem;
+      font-weight: $font-weight-bold;
+      margin-bottom: 1.5rem;
+      color: $text-color;
+      line-height: 1.2;
+    }
+    
+    p {
+      font-size: 1.25rem;
+      color: $text-light;
+      margin-bottom: 2rem;
+    }
+  }
+  
+  .estimation-form-container {
+    background-color: $white;
+    border-radius: 8px;
+    box-shadow: $box-shadow;
+    padding: 2rem;
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    .input-with-icon {
+      position: relative;
+      
+      .input-icon {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+      
+      input {
+        width: 100%;
+        padding: 1rem 1rem 1rem 3rem;
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+        font-size: 1rem;
+        transition: border-color 0.2s ease;
+        
+        &:focus {
+          outline: none;
+          border-color: $primary-color;
+        }
+      }
+    }
+    
+    .estimation-result {
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #e0e0e0;
+      
+      .result-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+        
+        .result-label {
+          font-weight: $font-weight-medium;
+          color: $text-light;
+        }
+        
+        .result-value {
+          font-weight: $font-weight-bold;
+          color: $primary-color;
+        }
+      }
+    }
+  }
+  
+  .hero-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    .map-illustration {
+      max-width: 100%;
+      height: auto;
+      
+      // Styling for Lottie animation
+      > div {
+        width: 500px;
+        height: 400px;
+        
+        @media (max-width: $breakpoint-md) {
+          width: 100%;
+          height: auto;
+        }
+      }
+    }
+  }
+}

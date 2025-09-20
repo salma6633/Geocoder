@@ -1,0 +1,101 @@
+@use '../../../../styles/variables' as *;
+
+.billing-widget {
+  .billing-summary {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: $spacing-lg;
+    padding-bottom: $spacing-lg;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  }
+  
+  .billing-period {
+    .period-label {
+      font-size: 0.875rem;
+      color: $text-light;
+      margin-bottom: $spacing-xs;
+    }
+    
+    .period-value {
+      font-weight: $font-weight-medium;
+    }
+  }
+  
+  .billing-cost {
+    text-align: right;
+    
+    .cost-label {
+      font-size: 0.875rem;
+      color: $text-light;
+      margin-bottom: $spacing-xs;
+    }
+    
+    .cost-value {
+      font-size: 1.5rem;
+      font-weight: $font-weight-bold;
+      color: $text-color;
+      margin-bottom: $spacing-xs;
+    }
+    
+    .cost-comparison {
+      font-size: 0.75rem;
+      color: $text-light;
+    }
+  }
+  
+  .usage-header {
+    margin-bottom: $spacing-md;
+    
+    .usage-title {
+      font-weight: $font-weight-medium;
+    }
+  }
+  
+  .usage-items {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+  }
+  
+  .usage-item {
+    display: flex;
+    justify-content: space-between;
+    padding: $spacing-sm 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+  
+  .usage-item-info {
+    .usage-item-name {
+      font-weight: $font-weight-medium;
+      margin-bottom: $spacing-xs;
+    }
+    
+    .usage-item-count {
+      font-size: 0.75rem;
+      color: $text-light;
+    }
+  }
+  
+  .usage-item-cost {
+    font-weight: $font-weight-medium;
+    align-self: center;
+  }
+}
+
+// Responsive styles
+@media (max-width: $breakpoint-md) {
+  .billing-widget {
+    .billing-summary {
+      flex-direction: column;
+      gap: $spacing-md;
+    }
+    
+    .billing-cost {
+      text-align: left;
+    }
+  }
+}

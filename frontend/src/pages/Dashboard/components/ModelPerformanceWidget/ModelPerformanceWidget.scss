@@ -1,0 +1,98 @@
+@use '../../../../styles/variables' as *;
+
+.model-performance-widget {
+  .model-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: $spacing-lg;
+  }
+  
+  .model-metric {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .metric-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: $spacing-md;
+    width: 100%;
+  }
+  
+  .metric-name {
+    font-weight: $font-weight-medium;
+    flex: 1;
+  }
+  
+  .metric-badge {
+    font-size: 0.75rem;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-weight: $font-weight-medium;
+    
+    &.success {
+      background-color: rgba($success-color, 0.1);
+      color: $success-color;
+    }
+    
+    &.warning {
+      background-color: rgba($warning-color, 0.1);
+      color: $warning-color;
+    }
+    
+    &.error {
+      background-color: rgba($danger-color, 0.1);
+      color: $danger-color;
+    }
+  }
+  
+  .metric-chart {
+    margin-bottom: $spacing-md;
+  }
+  
+  .progress-ring {
+    position: relative;
+    
+    svg {
+      transform: rotate(-90deg);
+    }
+    
+    text {
+      transform: rotate(90deg);
+    }
+  }
+  
+  .metric-details {
+    width: 100%;
+  }
+  
+  .detail-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: $spacing-xs;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  
+  .detail-label {
+    font-size: 0.875rem;
+    color: $text-light;
+  }
+  
+  .detail-value {
+    font-size: 0.875rem;
+    font-weight: $font-weight-medium;
+    color: $text-color;
+  }
+}
+
+// Responsive styles
+@media (max-width: $breakpoint-lg) {
+  .model-performance-widget .model-metrics {
+    grid-template-columns: 1fr;
+    gap: $spacing-xl;
+  }
+}

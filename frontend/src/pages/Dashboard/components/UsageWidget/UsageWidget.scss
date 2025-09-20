@@ -1,0 +1,129 @@
+@use '../../../../styles/variables' as *;
+
+.usage-widget {
+  .widget-actions {
+    .icon-button {
+      &.loading {
+        animation: spin 1s linear infinite;
+        opacity: 0.7;
+        cursor: not-allowed;
+      }
+    }
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  .loading-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+  }
+  
+  .loading-spinner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    svg {
+      margin-bottom: $spacing-md;
+    }
+    
+    p {
+      color: $text-light;
+      font-size: 0.9rem;
+    }
+  }
+  .usage-chart {
+    margin-bottom: $spacing-lg;
+  }
+  
+  .chart-container {
+    display: flex;
+    height: 200px;
+  }
+  
+  .chart-labels {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-right: $spacing-sm;
+    color: $text-light;
+    font-size: 0.75rem;
+  }
+  
+  .chart-bars {
+    display: flex;
+    flex: 1;
+    align-items: flex-end;
+    gap: $spacing-xs;
+  }
+  
+  .chart-bar {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    
+    .bar-fill {
+      width: 100%;
+      background: linear-gradient(to top, $primary-color, $primary-light);
+      border-radius: $border-radius-sm $border-radius-sm 0 0;
+      margin-bottom: $spacing-xs;
+    }
+    
+    .bar-label {
+      font-size: 0.75rem;
+      color: $text-light;
+    }
+  }
+  
+  .usage-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: $spacing-md;
+  }
+  
+  .stat-item {
+    text-align: center;
+  }
+  
+  .stat-label {
+    font-size: 0.75rem;
+    color: $text-light;
+    margin-bottom: $spacing-xs;
+  }
+  
+  .stat-value {
+    font-size: 1.5rem;
+    font-weight: $font-weight-bold;
+    color: $text-color;
+    margin-bottom: $spacing-xs;
+  }
+  
+  .stat-change {
+    font-size: 0.75rem;
+    font-weight: $font-weight-medium;
+    
+    &.positive {
+      color: $success-color;
+    }
+    
+    &.negative {
+      color: $danger-color;
+    }
+  }
+}
+
+// Responsive styles
+@media (max-width: $breakpoint-md) {
+  .usage-widget .usage-stats {
+    grid-template-columns: 1fr;
+    gap: $spacing-lg;
+  }
+}

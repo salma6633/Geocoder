@@ -1,0 +1,733 @@
+@use '../../styles/variables' as *;
+
+.usage-page {
+  width: 100%;
+  padding-bottom: $spacing-xxl;
+}
+
+// Header section
+.usage-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $spacing-xl;
+  flex-wrap: wrap;
+  gap: $spacing-md;
+  
+  .usage-title {
+    h1 {
+      font-size: 1.75rem;
+      font-weight: $font-weight-bold;
+      margin: 0 0 $spacing-xs 0;
+      color: $text-color;
+    }
+    
+    p {
+      color: $text-light;
+      margin: 0;
+      font-size: 0.95rem;
+    }
+  }
+  
+  .usage-actions {
+    display: flex;
+    gap: $spacing-sm;
+    
+    .time-range-selector {
+      display: flex;
+      align-items: center;
+      background-color: white;
+      border-radius: $border-radius;
+      padding: $spacing-xs $spacing-sm;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      color: $text-light;
+      
+      svg {
+        margin-right: $spacing-xs;
+      }
+      
+      select {
+        border: none;
+        background: none;
+        color: $text-color;
+        font-size: 0.875rem;
+        padding-right: $spacing-sm;
+        cursor: pointer;
+        
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+    
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: $spacing-xs $spacing-md;
+      border-radius: $border-radius;
+      font-size: 0.875rem;
+      font-weight: $font-weight-medium;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      
+      svg {
+        margin-right: $spacing-xs;
+      }
+    }
+    
+    .btn-refresh {
+      background-color: white;
+      color: $text-color;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.03);
+      }
+    }
+    
+    .btn-download {
+      background-color: $primary-color;
+      color: white;
+      border: none;
+      
+      &:hover {
+        background-color: darken($primary-color, 5%);
+      }
+    }
+  }
+}
+
+// Content section
+.usage-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 600px), 1fr));
+  gap: $spacing-lg;
+}
+
+// Card styles
+.usage-card {
+  background-color: white;
+  border-radius: $border-radius-lg;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+  }
+  
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $spacing-md $spacing-lg;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    
+    h2 {
+      font-size: 1.125rem;
+      font-weight: $font-weight-semibold;
+      margin: 0;
+      color: $text-color;
+    }
+    
+    .btn-expand {
+      background: none;
+      border: none;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: $text-light;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+        color: $text-color;
+      }
+      
+      svg {
+        transition: transform 0.3s ease;
+      }
+      
+      &.expanded svg {
+        transform: rotate(180deg);
+      }
+    }
+  }
+  
+  .card-content {
+    padding: $spacing-lg;
+    overflow: hidden;
+  }
+  
+  h3 {
+    font-size: 1rem;
+    font-weight: $font-weight-semibold;
+    margin: $spacing-lg 0 $spacing-md;
+    color: $text-color;
+  }
+}
+
+// Credits Overview Card
+.credits-overview {
+  .credits-summary {
+    .credits-meter {
+      display: flex;
+      align-items: center;
+      gap: $spacing-xl;
+      
+      .meter-visual {
+        position: relative;
+        width: 160px;
+        height: 160px;
+        
+        .meter-content {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          
+          .meter-percentage {
+            font-size: 2rem;
+            font-weight: $font-weight-bold;
+            color: $text-color;
+          }
+          
+          .meter-label {
+            font-size: 0.875rem;
+            color: $text-light;
+          }
+        }
+      }
+      
+      .meter-details {
+        flex: 1;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: $spacing-md;
+        
+        .meter-detail {
+          .detail-label {
+            font-size: 0.875rem;
+            color: $text-light;
+            margin-bottom: $spacing-xs;
+          }
+          
+          .detail-value {
+            font-size: 1.25rem;
+            font-weight: $font-weight-semibold;
+            color: $text-color;
+          }
+        }
+      }
+    }
+  }
+  
+  .credits-history {
+    .history-chart {
+      display: flex;
+      height: 200px;
+      align-items: flex-end;
+      gap: $spacing-xs;
+      
+      .chart-column {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        
+        .chart-bar-container {
+          width: 100%;
+          height: 160px;
+          display: flex;
+          align-items: flex-end;
+          justify-content: center;
+          
+          .chart-bar {
+            width: 80%;
+            background: linear-gradient(to top, $primary-color, $primary-light);
+            border-radius: $border-radius-sm $border-radius-sm 0 0;
+            position: relative;
+            transition: height 0.5s ease;
+            
+            &:hover .bar-tooltip {
+              opacity: 1;
+              transform: translateY(0);
+            }
+            
+            .bar-tooltip {
+              position: absolute;
+              top: -30px;
+              left: 50%;
+              transform: translateX(-50%) translateY(10px);
+              background-color: rgba(0, 0, 0, 0.8);
+              color: white;
+              padding: $spacing-xs $spacing-sm;
+              border-radius: $border-radius-sm;
+              font-size: 0.75rem;
+              white-space: nowrap;
+              opacity: 0;
+              transition: all 0.2s ease;
+              pointer-events: none;
+              
+              &:after {
+                content: '';
+                position: absolute;
+                bottom: -5px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 0;
+                height: 0;
+                border-left: 5px solid transparent;
+                border-right: 5px solid transparent;
+                border-top: 5px solid rgba(0, 0, 0, 0.8);
+              }
+            }
+          }
+        }
+        
+        .chart-label {
+          margin-top: $spacing-xs;
+          font-size: 0.75rem;
+          color: $text-light;
+        }
+      }
+    }
+  }
+}
+
+// Requests Overview Card
+.requests-overview {
+  .requests-summary {
+    .summary-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: $spacing-md;
+      
+      .metric-card {
+        background-color: rgba($primary-color, 0.03);
+        border-radius: $border-radius;
+        padding: $spacing-md;
+        display: flex;
+        align-items: center;
+        gap: $spacing-md;
+        
+        .metric-icon {
+          width: 48px;
+          height: 48px;
+          border-radius: 50%;
+          background-color: white;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .metric-content {
+          flex: 1;
+          
+          .metric-value {
+            font-size: 1.5rem;
+            font-weight: $font-weight-bold;
+            color: $text-color;
+            margin-bottom: $spacing-xs;
+          }
+          
+          .metric-label {
+            font-size: 0.875rem;
+            color: $text-light;
+          }
+        }
+        
+        &.total-requests {
+          background-color: rgba($primary-color, 0.05);
+        }
+        
+        &.success-rate {
+          background-color: rgba($success-color, 0.05);
+        }
+        
+        &.failed-requests {
+          background-color: rgba($danger-color, 0.05);
+        }
+      }
+    }
+  }
+  
+  .requests-history {
+    .history-chart.stacked {
+      display: flex;
+      height: 200px;
+      align-items: flex-end;
+      gap: $spacing-xs;
+      
+      .chart-column {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        
+        .chart-bar-container {
+          width: 100%;
+          height: 160px;
+          display: flex;
+          align-items: flex-end;
+          justify-content: center;
+          
+          .chart-bar-stacked {
+            width: 80%;
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: center;
+            height: 100%;
+            
+            .chart-bar {
+              width: 100%;
+              position: relative;
+              transition: height 0.5s ease;
+              
+              &:hover .bar-tooltip {
+                opacity: 1;
+                transform: translateY(0);
+              }
+              
+              &.success {
+                background: linear-gradient(to top, $success-color, lighten($success-color, 10%));
+                border-radius: 0 0 $border-radius-sm $border-radius-sm;
+                z-index: 1;
+              }
+              
+              &.failed {
+                background: linear-gradient(to top, $danger-color, lighten($danger-color, 10%));
+                border-radius: $border-radius-sm $border-radius-sm 0 0;
+              }
+              
+              .bar-tooltip {
+                position: absolute;
+                top: 50%;
+                left: 110%;
+                transform: translateY(-50%) translateX(10px);
+                background-color: rgba(0, 0, 0, 0.8);
+                color: white;
+                padding: $spacing-xs $spacing-sm;
+                border-radius: $border-radius-sm;
+                font-size: 0.75rem;
+                white-space: nowrap;
+                opacity: 0;
+                transition: all 0.2s ease;
+                pointer-events: none;
+                
+                &:after {
+                  content: '';
+                  position: absolute;
+                  left: -5px;
+                  top: 50%;
+                  transform: translateY(-50%);
+                  width: 0;
+                  height: 0;
+                  border-top: 5px solid transparent;
+                  border-bottom: 5px solid transparent;
+                  border-right: 5px solid rgba(0, 0, 0, 0.8);
+                }
+              }
+            }
+          }
+        }
+        
+        .chart-label {
+          margin-top: $spacing-xs;
+          font-size: 0.75rem;
+          color: $text-light;
+        }
+      }
+    }
+  }
+}
+
+// Model Usage Card
+.model-usage {
+  .models-table-container {
+    overflow-x: auto;
+    
+    .models-table {
+      width: 100%;
+      border-collapse: collapse;
+      
+      th, td {
+        padding: $spacing-sm $spacing-md;
+        text-align: left;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      }
+      
+      th {
+        font-weight: $font-weight-semibold;
+        color: $text-light;
+        font-size: 0.875rem;
+      }
+      
+      td {
+        font-size: 0.95rem;
+        color: $text-color;
+      }
+      
+      tr:last-child td {
+        border-bottom: none;
+      }
+      
+      .success-rate-indicator {
+        display: flex;
+        align-items: center;
+        gap: $spacing-sm;
+        
+        .rate-bar {
+          flex: 1;
+          height: 6px;
+          background-color: rgba(0, 0, 0, 0.05);
+          border-radius: 3px;
+          overflow: hidden;
+          
+          .rate-fill {
+            height: 100%;
+            background: linear-gradient(to right, $success-color, lighten($success-color, 10%));
+            border-radius: 3px;
+          }
+        }
+        
+        span {
+          font-size: 0.875rem;
+          font-weight: $font-weight-medium;
+          color: $success-color;
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+  
+  .models-distribution {
+    .distribution-chart {
+      display: flex;
+      align-items: center;
+      gap: $spacing-xl;
+      
+      .donut-chart {
+        position: relative;
+        width: 180px;
+        height: 180px;
+        
+        .donut-center {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          
+          .center-value {
+            font-size: 1.5rem;
+            font-weight: $font-weight-bold;
+            color: $text-color;
+          }
+          
+          .center-label {
+            font-size: 0.75rem;
+            color: $text-light;
+          }
+        }
+      }
+      
+      .distribution-legend {
+        flex: 1;
+        
+        .legend-item {
+          display: flex;
+          align-items: center;
+          margin-bottom: $spacing-sm;
+          
+          .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+            margin-right: $spacing-sm;
+          }
+          
+          .legend-label {
+            flex: 1;
+            font-size: 0.95rem;
+            color: $text-color;
+          }
+          
+          .legend-value {
+            font-size: 0.95rem;
+            font-weight: $font-weight-medium;
+            color: $text-color;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Account Limits Card
+.account-limits {
+  .limits-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-md;
+    
+    .limit-card {
+      background-color: white;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      border-radius: $border-radius;
+      padding: $spacing-md;
+      display: flex;
+      align-items: center;
+      gap: $spacing-md;
+      transition: all 0.2s ease;
+      
+      &:hover {
+        border-color: rgba($primary-color, 0.3);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
+      
+      .limit-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background-color: rgba($primary-color, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: $primary-color;
+      }
+      
+      .limit-content {
+        flex: 1;
+        
+        .limit-value {
+          font-size: 1.25rem;
+          font-weight: $font-weight-bold;
+          color: $text-color;
+          margin-bottom: $spacing-xs;
+        }
+        
+        .limit-label {
+          font-size: 0.875rem;
+          color: $text-light;
+        }
+      }
+      
+      .limit-info {
+        color: $text-light;
+        cursor: help;
+        
+        &:hover {
+          color: $primary-color;
+        }
+      }
+    }
+  }
+  
+  .limits-upgrade {
+    margin-top: $spacing-xl;
+    background: linear-gradient(to right, rgba($primary-color, 0.05), rgba($primary-color, 0.02));
+    border-radius: $border-radius;
+    padding: $spacing-lg;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $spacing-lg;
+    
+    .upgrade-message {
+      h3 {
+        margin-top: 0;
+        margin-bottom: $spacing-xs;
+      }
+      
+      p {
+        color: $text-light;
+        margin: 0;
+        font-size: 0.95rem;
+        max-width: 600px;
+      }
+    }
+    
+    .btn-upgrade {
+      background-color: $primary-color;
+      color: white;
+      border: none;
+      padding: $spacing-sm $spacing-lg;
+      border-radius: $border-radius;
+      font-weight: $font-weight-medium;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+      
+      &:hover {
+        background-color: darken($primary-color, 5%);
+      }
+    }
+  }
+}
+
+// Responsive styles
+@media (max-width: $breakpoint-lg) {
+  .usage-content {
+    grid-template-columns: 1fr;
+  }
+  
+  .credits-overview .credits-summary .credits-meter {
+    flex-direction: column;
+    align-items: center;
+    
+    .meter-details {
+      width: 100%;
+    }
+  }
+  
+  .model-usage .models-distribution .distribution-chart {
+    flex-direction: column;
+  }
+  
+  .account-limits .limits-upgrade {
+    flex-direction: column;
+    align-items: flex-start;
+    
+    .btn-upgrade {
+      align-self: flex-start;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-md) {
+  .usage-header {
+    flex-direction: column;
+    align-items: flex-start;
+    
+    .usage-actions {
+      width: 100%;
+      justify-content: space-between;
+    }
+  }
+  
+  .requests-overview .requests-summary .summary-metrics {
+    grid-template-columns: 1fr;
+  }
+  
+  .account-limits .limits-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,128 @@
+@use '../../../../styles/variables' as *;
+
+.dashboard-sidebar {
+  width: 240px;
+  background-color: #fff;
+  border-right: 1px solid rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  height: 100vh;
+  z-index: $z-index-fixed;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  transition: width 0.3s ease;
+}
+
+.sidebar-header {
+  padding: $spacing-md $spacing-lg;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  height: 64px;
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  font-weight: $font-weight-semibold;
+  font-size: 1.25rem;
+  color: $primary-color;
+  
+  svg {
+    margin-right: $spacing-sm;
+  }
+}
+
+.sidebar-nav {
+  flex: 1;
+  padding: $spacing-md 0;
+  overflow-y: auto;
+  
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  li {
+    display: flex;
+    align-items: center;
+    padding: $spacing-sm $spacing-lg;
+    margin: $spacing-xs 0;
+    cursor: pointer;
+    color: $text-light;
+    transition: all 0.2s ease;
+    border-radius: 0 $border-radius-lg $border-radius-lg 0;
+    position: relative;
+    
+    &:hover {
+      background-color: rgba(66, 133, 244, 0.04);
+      color: $primary-color;
+    }
+    
+    &.active {
+      color: $primary-color;
+      background-color: rgba(66, 133, 244, 0.08);
+      font-weight: $font-weight-medium;
+      
+      &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        background-color: $primary-color;
+        border-radius: 0 $border-radius $border-radius 0;
+      }
+    }
+    
+    svg {
+      margin-right: $spacing-md;
+      flex-shrink: 0;
+    }
+  }
+}
+
+.sidebar-footer {
+  padding: $spacing-md $spacing-lg;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  
+  .sidebar-footer-item {
+    display: flex;
+    align-items: center;
+    padding: $spacing-sm 0;
+    color: $text-light;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    
+    &:hover {
+      color: $primary-color;
+    }
+    
+    svg {
+      margin-right: $spacing-md;
+    }
+  }
+}
+
+// Responsive styles
+@media (max-width: $breakpoint-lg) {
+  .dashboard-sidebar {
+    width: 64px;
+    
+    .logo span,
+    .sidebar-nav li span,
+    .sidebar-footer-item span {
+      display: none;
+    }
+    
+    .sidebar-nav li svg {
+      margin-right: 0;
+    }
+    
+    .sidebar-footer-item svg {
+      margin-right: 0;
+    }
+  }
+}

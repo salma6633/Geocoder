@@ -1,0 +1,419 @@
+@use '../../styles/variables' as *;
+
+// Dashboard container
+.dashboard-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f8f9fa;
+  color: $text-color;
+  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+// Main content
+.dashboard-main {
+  flex: 1;
+  margin-left: 240px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  position: relative;
+  background: linear-gradient(135deg, rgba(248, 249, 250, 0.95) 0%, rgba(255, 255, 255, 0.95) 100%);
+}
+
+// Dashboard content
+.dashboard-content {
+  padding: $spacing-xl;
+  flex: 1;
+  position: relative;
+  z-index: 1;
+}
+
+.dashboard-welcome {
+  margin-bottom: $spacing-xl;
+  
+  h2 {
+    font-size: 1.75rem;
+    font-weight: $font-weight-semibold;
+    margin-bottom: $spacing-xs;
+    color: $text-color;
+  }
+  
+  p {
+    color: $text-light;
+    font-size: 1rem;
+    margin-bottom: $spacing-md;
+  }
+  
+  .welcome-stats {
+    display: flex;
+    gap: $spacing-lg;
+    margin-top: $spacing-md;
+    
+    .stat-item {
+      background: $white;
+      border-radius: $border-radius-lg;
+      padding: $spacing-md;
+      flex: 1;
+      box-shadow: $box-shadow-sm;
+      border-left: 4px solid $primary-color;
+      transition: all 0.2s ease;
+      
+      &:hover {
+        transform: translateY(-3px);
+        box-shadow: $box-shadow;
+      }
+      
+      &.success {
+        border-left-color: $success-color;
+      }
+      
+      &.warning {
+        border-left-color: $warning-color;
+      }
+      
+      &.danger {
+        border-left-color: $danger-color;
+      }
+      
+      .stat-value {
+        font-size: 1.5rem;
+        font-weight: $font-weight-bold;
+        margin-bottom: $spacing-xs;
+      }
+      
+      .stat-label {
+        color: $text-light;
+        font-size: 0.875rem;
+      }
+    }
+  }
+}
+
+.dashboard-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: $spacing-xl;
+  margin-bottom: $spacing-xl;
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+  
+  &.row-2-1 {
+    grid-template-columns: 2fr 1fr;
+    
+    @media (max-width: $breakpoint-lg) {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  &.row-1-2 {
+    grid-template-columns: 1fr 2fr;
+    
+    @media (max-width: $breakpoint-lg) {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  &.row-1-1-1 {
+    grid-template-columns: 1fr 1fr 1fr;
+    
+    @media (max-width: $breakpoint-xl) {
+      grid-template-columns: 1fr 1fr;
+    }
+    
+    @media (max-width: $breakpoint-md) {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+// Widgets
+.dashboard-widget {
+  background-color: white;
+  border-radius: $border-radius-lg;
+  box-shadow: $box-shadow-sm;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  height: 100%;
+  position: relative;
+  
+  &:hover {
+    box-shadow: $box-shadow;
+    transform: translateY(-4px);
+  }
+  
+  &.widget-primary {
+    border-top: 4px solid $primary-color;
+  }
+  
+  &.widget-success {
+    border-top: 4px solid $success-color;
+  }
+  
+  &.widget-warning {
+    border-top: 4px solid $warning-color;
+  }
+  
+  &.widget-danger {
+    border-top: 4px solid $danger-color;
+  }
+}
+
+.widget-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-md $spacing-lg;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  
+  h3 {
+    margin: 0;
+    font-size: 1.125rem;
+    font-weight: $font-weight-semibold;
+    color: $text-color;
+    display: flex;
+    align-items: center;
+    
+    .widget-icon {
+      margin-right: $spacing-sm;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: $primary-color;
+    }
+  }
+}
+
+.widget-actions {
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+}
+
+.icon-button {
+  background: none;
+  border: none;
+  padding: $spacing-xs;
+  cursor: pointer;
+  color: $text-light;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+    color: $text-color;
+  }
+}
+
+.widget-content {
+  padding: $spacing-lg;
+}
+
+.widget-footer {
+  padding: $spacing-md $spacing-lg;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgba(0, 0, 0, 0.01);
+  
+  .footer-text {
+    font-size: 0.875rem;
+    color: $text-light;
+  }
+  
+  .footer-actions {
+    display: flex;
+    gap: $spacing-sm;
+  }
+}
+
+// Button styles
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-sm $spacing-md;
+  border-radius: $border-radius;
+  font-weight: $font-weight-medium;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  
+  svg {
+    margin-right: $spacing-xs;
+  }
+  
+  &.btn-sm {
+    padding: $spacing-xs $spacing-sm;
+    font-size: 0.75rem;
+  }
+  
+  &.btn-primary {
+    background-color: $primary-color;
+    color: white;
+    
+    &:hover {
+      background-color: darken($primary-color, 5%);
+      box-shadow: $box-shadow-sm;
+    }
+  }
+  
+  &.btn-success {
+    background-color: $success-color;
+    color: white;
+    
+    &:hover {
+      background-color: darken($success-color, 5%);
+      box-shadow: $box-shadow-sm;
+    }
+  }
+  
+  &.btn-warning {
+    background-color: $warning-color;
+    color: white;
+    
+    &:hover {
+      background-color: darken($warning-color, 5%);
+      box-shadow: $box-shadow-sm;
+    }
+  }
+  
+  &.btn-danger {
+    background-color: $danger-color;
+    color: white;
+    
+    &:hover {
+      background-color: darken($danger-color, 5%);
+      box-shadow: $box-shadow-sm;
+    }
+  }
+  
+  &.btn-outline {
+    background-color: transparent;
+    border: 1px solid $primary-color;
+    color: $primary-color;
+    
+    &:hover {
+      background-color: rgba($primary-color, 0.05);
+    }
+  }
+  
+  &.btn-text {
+    background-color: transparent;
+    color: $primary-color;
+    
+    &:hover {
+      background-color: rgba($primary-color, 0.05);
+    }
+  }
+}
+
+.btn-icon {
+  background: none;
+  border: none;
+  padding: $spacing-xs;
+  cursor: pointer;
+  color: $text-light;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+    color: $text-color;
+  }
+}
+
+// Dashboard message
+.dashboard-message {
+  padding: $spacing-xl;
+  text-align: center;
+  font-size: 1.25rem;
+  color: $text-light;
+}
+
+// Loading state
+.widget-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  
+  .loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba($primary-color, 0.1);
+    border-radius: 50%;
+    border-top-color: $primary-color;
+    animation: spin 1s ease-in-out infinite;
+  }
+  
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+}
+
+// Error state
+.widget-error {
+  padding: $spacing-lg;
+  text-align: center;
+  color: $danger-color;
+  
+  .error-icon {
+    font-size: 2rem;
+    margin-bottom: $spacing-md;
+  }
+  
+  .error-message {
+    margin-bottom: $spacing-md;
+  }
+}
+
+// Empty state
+.widget-empty {
+  padding: $spacing-xl;
+  text-align: center;
+  color: $text-light;
+  
+  .empty-icon {
+    font-size: 2rem;
+    margin-bottom: $spacing-md;
+    opacity: 0.5;
+  }
+  
+  .empty-message {
+    margin-bottom: $spacing-md;
+  }
+}
+
+// Responsive styles
+@media (max-width: $breakpoint-lg) {
+  .dashboard-main {
+    margin-left: 64px;
+  }
+  
+  .dashboard-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: $breakpoint-md) {
+  .dashboard-content {
+    padding: $spacing-md;
+  }
+  
+  .dashboard-welcome {
+    .welcome-stats {
+      flex-direction: column;
+      gap: $spacing-md;
+    }
+  }
+}

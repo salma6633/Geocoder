@@ -1,0 +1,630 @@
+@use '../../styles/variables' as *;
+
+.notifications-page {
+  padding: $spacing-xl;
+  max-width: 1400px;
+  margin: 0 auto;
+  
+  // Header section
+  .notifications-header {
+    margin-bottom: $spacing-xl;
+    
+    .notifications-title {
+      h1 {
+        font-size: 2rem;
+        font-weight: $font-weight-bold;
+        margin: 0 0 $spacing-xs 0;
+        color: $text-color;
+        letter-spacing: -0.5px;
+      }
+      
+      p {
+        font-size: 1rem;
+        color: $text-light;
+        margin: 0;
+      }
+    }
+  }
+  
+  // Content section
+  .notifications-content {
+    background-color: white;
+    border-radius: $border-radius-lg;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+  }
+  
+  // Actions bar
+  .notifications-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $spacing-lg;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    
+    .btn-mark-all-read {
+      display: flex;
+      align-items: center;
+      gap: $spacing-xs;
+      background-color: $primary-color;
+      color: white;
+      border: none;
+      border-radius: $border-radius;
+      padding: $spacing-sm $spacing-md;
+      font-weight: $font-weight-medium;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      
+      &:hover {
+        background-color: darken($primary-color, 5%);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba($primary-color, 0.2);
+      }
+      
+      &:active {
+        transform: translateY(0);
+      }
+    }
+    
+    .notifications-filters {
+      display: flex;
+      gap: $spacing-md;
+    }
+    
+    .filter-container {
+      position: relative;
+      
+      svg {
+        position: absolute;
+        left: $spacing-sm;
+        top: 50%;
+        transform: translateY(-50%);
+        color: $text-light;
+      }
+      
+      select {
+        background-color: #f8f9fa;
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: $border-radius;
+        padding: $spacing-sm $spacing-sm $spacing-sm $spacing-xl;
+        font-size: 0.875rem;
+        appearance: none;
+        min-width: 150px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        
+        &:focus {
+          outline: none;
+          border-color: $primary-light;
+          box-shadow: 0 0 0 2px rgba($primary-color, 0.1);
+          background-color: white;
+        }
+      }
+    }
+    
+    .btn-reset-filters {
+      background: none;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: $border-radius;
+      padding: $spacing-sm $spacing-md;
+      font-size: 0.875rem;
+      color: $text-light;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      
+      &:hover {
+        background-color: #f8f9fa;
+        color: $text-color;
+      }
+    }
+  }
+  
+  // Table
+  .notifications-table-container {
+    overflow-x: auto;
+    padding: 0 $spacing-lg $spacing-lg $spacing-lg;
+  }
+  
+  .notifications-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    
+    th, td {
+      padding: $spacing-md;
+      text-align: left;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+    
+    th {
+      font-weight: $font-weight-medium;
+      color: $text-light;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    td {
+      font-size: 0.875rem;
+      vertical-align: middle;
+    }
+    
+    tr {
+      transition: background-color 0.2s ease;
+      cursor: pointer;
+      
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.01);
+      }
+      
+      &.status-read {
+        background-color: rgba(0, 0, 0, 0.02);
+        
+        .notification-title {
+          color: $text-light;
+        }
+      }
+      
+      &.status-unread {
+        .notification-title {
+          font-weight: $font-weight-semibold;
+        }
+      }
+    }
+    
+    .notification-type-cell {
+      width: 60px;
+    }
+    
+    .type-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      
+      &.success {
+        background-color: rgba($success-color, 0.1);
+        color: $success-color;
+      }
+      
+      &.error {
+        background-color: rgba($danger-color, 0.1);
+        color: $danger-color;
+      }
+      
+      &.warning {
+        background-color: rgba($warning-color, 0.1);
+        color: $warning-color;
+      }
+      
+      &.info {
+        background-color: rgba($primary-color, 0.1);
+        color: $primary-color;
+      }
+    }
+    
+    .notification-title {
+      font-weight: $font-weight-medium;
+    }
+    
+    .notification-message {
+      color: $text-light;
+      max-width: 400px;
+    }
+    
+    .status-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: $font-weight-medium;
+      
+      &.read {
+        background-color: rgba($text-light, 0.1);
+        color: $text-light;
+      }
+      
+      &.unread {
+        background-color: rgba($primary-color, 0.1);
+        color: $primary-color;
+      }
+    }
+  }
+  
+  .no-results {
+    padding: $spacing-xl;
+    text-align: center;
+    color: $text-light;
+    
+    button {
+      margin-top: $spacing-md;
+      padding: $spacing-sm $spacing-lg;
+      background-color: $primary-color;
+      color: white;
+      border: none;
+      border-radius: $border-radius;
+      font-weight: $font-weight-medium;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      
+      &:hover {
+        background-color: darken($primary-color, 5%);
+      }
+    }
+  }
+  
+  // Loading and error states
+  .loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: $spacing-xl * 2;
+    
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid rgba(0, 0, 0, 0.1);
+      border-top: 3px solid $primary-color;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: $spacing-md;
+    }
+    
+    p {
+      color: $text-light;
+    }
+  }
+  
+  .error-container {
+    padding: $spacing-xl;
+    text-align: center;
+    
+    .error-message {
+      color: $danger-color;
+      margin-bottom: $spacing-md;
+    }
+    
+    .btn-retry {
+      padding: $spacing-sm $spacing-lg;
+      background-color: $primary-color;
+      color: white;
+      border: none;
+      border-radius: $border-radius;
+      font-weight: $font-weight-medium;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      
+      &:hover {
+        background-color: darken($primary-color, 5%);
+      }
+    }
+  }
+  
+  // Modal
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(2px);
+  }
+  
+  .modal-content {
+    background-color: white;
+    border-radius: $border-radius-lg;
+    width: 100%;
+    max-width: 600px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    
+    &.notification-detail-modal {
+      max-width: 600px;
+    }
+  }
+  
+  .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $spacing-lg;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    
+    &.success {
+      background-color: rgba($success-color, 0.1);
+      color: $success-color;
+      
+      .notification-icon {
+        background-color: $success-color;
+        color: white;
+      }
+    }
+    
+    &.error {
+      background-color: rgba($danger-color, 0.1);
+      color: $danger-color;
+      
+      .notification-icon {
+        background-color: $danger-color;
+        color: white;
+      }
+    }
+    
+    &.warning {
+      background-color: rgba($warning-color, 0.1);
+      color: $warning-color;
+      
+      .notification-icon {
+        background-color: $warning-color;
+        color: white;
+      }
+    }
+    
+    &.info {
+      background-color: rgba($primary-color, 0.1);
+      color: $primary-color;
+      
+      .notification-icon {
+        background-color: $primary-color;
+        color: white;
+      }
+    }
+    
+    .notification-icon {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      margin-right: $spacing-md;
+      
+      svg {
+        width: 24px;
+        height: 24px;
+      }
+    }
+    
+    h2 {
+      margin: 0;
+      font-size: 1.25rem;
+      font-weight: $font-weight-semibold;
+      flex-grow: 1;
+    }
+    
+    .btn-close {
+      background: none;
+      border: none;
+      padding: $spacing-xs;
+      cursor: pointer;
+      color: $text-light;
+      border-radius: 50%;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.04);
+        color: $text-color;
+      }
+    }
+  }
+  
+  .modal-body {
+    padding: $spacing-lg;
+    
+    .notification-meta {
+      display: flex;
+      align-items: center;
+      gap: $spacing-md;
+      margin-bottom: $spacing-lg;
+      
+      .notification-date {
+        color: $text-light;
+        font-size: 0.875rem;
+      }
+      
+      .notification-type-badge {
+        display: inline-block;
+        padding: 2px 8px;
+        border-radius: 12px;
+        font-size: 0.75rem;
+        font-weight: $font-weight-medium;
+        
+        &.success {
+          background-color: rgba($success-color, 0.1);
+          color: $success-color;
+        }
+        
+        &.error {
+          background-color: rgba($danger-color, 0.1);
+          color: $danger-color;
+        }
+        
+        &.warning {
+          background-color: rgba($warning-color, 0.1);
+          color: $warning-color;
+        }
+        
+        &.info {
+          background-color: rgba($primary-color, 0.1);
+          color: $primary-color;
+        }
+      }
+    }
+    
+    .notification-content {
+      .notification-message {
+        font-size: 1rem;
+        line-height: 1.6;
+        margin-bottom: $spacing-lg;
+      }
+      
+      .notification-html-content {
+        margin-top: $spacing-lg;
+        
+        h2 {
+          font-size: 1.25rem;
+          font-weight: $font-weight-semibold;
+          margin: $spacing-lg 0 $spacing-md;
+        }
+        
+        h3 {
+          font-size: 1.1rem;
+          font-weight: $font-weight-semibold;
+          margin: $spacing-md 0 $spacing-sm;
+        }
+        
+        p {
+          margin-bottom: $spacing-md;
+          line-height: 1.6;
+        }
+        
+        ul, ol {
+          margin-bottom: $spacing-md;
+          padding-left: $spacing-lg;
+          
+          li {
+            margin-bottom: $spacing-xs;
+          }
+        }
+        
+        a {
+          color: $primary-color;
+          text-decoration: none;
+          
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+      
+      .notification-image {
+        margin: $spacing-lg 0;
+        border-radius: $border-radius;
+        overflow: hidden;
+        
+        img {
+          width: 100%;
+          height: auto;
+          display: block;
+        }
+      }
+    }
+  }
+  
+  .modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: $spacing-sm;
+    padding: $spacing-md $spacing-lg;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    
+    .btn-secondary {
+      background-color: white;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      color: $text-color;
+      border-radius: $border-radius;
+      padding: $spacing-sm $spacing-lg;
+      font-weight: $font-weight-medium;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      
+      &:hover {
+        background-color: #f8f9fa;
+      }
+    }
+    
+    .btn-primary {
+      background-color: $primary-color;
+      color: white;
+      border: none;
+      border-radius: $border-radius;
+      padding: $spacing-sm $spacing-lg;
+      font-weight: $font-weight-medium;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      
+      &:hover {
+        background-color: darken($primary-color, 5%);
+      }
+    }
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+// Responsive styles
+@media (max-width: $breakpoint-lg) {
+  .notifications-page {
+    padding: $spacing-lg;
+    
+    .notifications-actions {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: $spacing-md;
+      
+      .btn-mark-all-read {
+        margin-bottom: $spacing-sm;
+      }
+      
+      .notifications-filters {
+        width: 100%;
+        flex-wrap: wrap;
+        
+        .filter-container {
+          flex: 1;
+          min-width: 150px;
+          
+          select {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: $breakpoint-md) {
+  .notifications-page {
+    padding: $spacing-md;
+    
+    .notifications-header .notifications-title h1 {
+      font-size: 1.5rem;
+    }
+    
+    .notifications-table-container {
+      padding: 0;
+    }
+    
+    .notifications-table {
+      th, td {
+        padding: $spacing-sm;
+      }
+      
+      th:nth-child(4),
+      td:nth-child(4) {
+        display: none;
+      }
+    }
+  }
+}

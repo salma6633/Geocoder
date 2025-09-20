@@ -1,0 +1,115 @@
+@use '../../../../styles/variables' as *;
+
+.api-keys-widget {
+  .new-key-form {
+    margin-bottom: $spacing-lg;
+    padding: $spacing-md;
+    background-color: #f8fafb;
+    border-radius: $border-radius;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+  }
+  
+  .form-group {
+    margin-bottom: $spacing-md;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: $spacing-xs;
+      font-size: 0.875rem;
+      font-weight: $font-weight-medium;
+    }
+    
+    input, select {
+      width: 100%;
+      padding: $spacing-sm;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: $border-radius;
+      font-size: 0.875rem;
+      
+      &:focus {
+        outline: none;
+        border-color: $primary-color;
+      }
+    }
+  }
+  
+  .checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+  }
+  
+  .checkbox-item {
+    display: flex;
+    align-items: center;
+    
+    input {
+      width: auto;
+      margin-right: $spacing-xs;
+    }
+  }
+  
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: $spacing-sm;
+    margin-top: $spacing-md;
+  }
+  
+  .api-keys-list {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+  }
+  
+  .api-key-item {
+    display: flex;
+    justify-content: space-between;
+    padding: $spacing-md;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: $border-radius;
+    transition: all 0.2s ease;
+    
+    &:hover {
+      background-color: #f8fafb;
+    }
+  }
+  
+  .key-info {
+    flex: 1;
+  }
+  
+  .key-name {
+    font-weight: $font-weight-medium;
+    margin-bottom: $spacing-xs;
+  }
+  
+  .key-value {
+    display: flex;
+    align-items: center;
+    margin-bottom: $spacing-xs;
+    
+    .key-mask {
+      font-family: monospace;
+      color: $text-light;
+      margin-right: $spacing-xs;
+    }
+  }
+  
+  .key-meta {
+    display: flex;
+    gap: $spacing-md;
+    font-size: 0.75rem;
+    color: $text-light;
+  }
+  
+  .key-actions {
+    display: flex;
+    gap: $spacing-xs;
+    align-items: flex-start;
+  }
+}

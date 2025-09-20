@@ -1,0 +1,96 @@
+@use 'sass:color';
+@use '../../styles/variables' as *;
+
+.home-page {
+  color: $text-color;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+// Common styles shared across components
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  
+  h2 {
+    font-size: 2.5rem;
+    font-weight: $font-weight-bold;
+    color: $text-color;
+    margin-bottom: 1rem;
+  }
+  
+  p {
+    font-size: 1.2rem;
+    color: $text-light;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}
+
+// Button Styles
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-weight: $font-weight-medium;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: none;
+  
+  &.btn-primary {
+    background-color: $primary-color;
+    color: $white;
+    
+    &:hover {
+      background-color: color.adjust($primary-color, $lightness: -5%);
+    }
+    
+    &:active {
+      background-color: color.adjust($primary-color, $lightness: -10%);
+    }
+  }
+  
+  &.btn-secondary {
+    background-color: $white;
+    color: $primary-color;
+    border: 1px solid $primary-color;
+    
+    &:hover {
+      background-color: rgba($primary-color, 0.05);
+    }
+    
+    &:active {
+      background-color: rgba($primary-color, 0.1);
+    }
+  }
+  
+  &.btn-outline {
+    background-color: transparent;
+    color: $primary-color;
+    border: 1px solid $primary-color;
+    
+    &:hover {
+      background-color: rgba($primary-color, 0.05);
+    }
+  }
+  
+  &.btn-block {
+    width: 100%;
+  }
+  
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+}

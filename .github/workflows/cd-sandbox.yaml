@@ -1,0 +1,62 @@
+name: Deploy Etijahat Sandbox to EC2
+
+on:
+  push:
+    branches: [ development ]
+    paths:
+      - 'server/**'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: server  
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: eu-west-1
+
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+
+    - name: Build, tag, and push image to Amazon ECR
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+      run: |
+        docker build -t $ECR_REGISTRY/etijahat-sandbox:latest .
+        docker push $ECR_REGISTRY/etijahat-sandbox:latest
+
+    - name: Deploy to EC2
+      env:
+        PRIVATE_KEY: ${{ secrets.EC2_ETTIJAHAT_SANDBOX_SSH_PRIVATE_KEY }}
+        HOST: ${{ secrets.ETIJAHAT_SANDBOX_EC2_IP }}
+        USER: ubuntu
+        AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+        ECR_REGISTRY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.eu-west-1.amazonaws.com
+        ECR_REPOSITORY: etijahat-sandbox
+      run: |
+        echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+        ssh -o StrictHostKeyChecking=no -i private_key ${USER}@${HOST} << EOF
+          echo "" > deployment-logs.log
+          aws s3 cp s3://armada-env-vars-bucket/etijahat/etijahat-sandbox.env /home/ubuntu/.env >> deployment-logs.log 2>&1
+          aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin $ECR_REGISTRY >> deployment-logs.log 2>&1
+          docker pull $ECR_REGISTRY/$ECR_REPOSITORY:latest >> deployment-logs.log 2>&1
+          docker stop etijahat-sandbox-container || true
+          docker rm etijahat-sandbox-container || true
+          docker run -d --name etijahat-sandbox-container \
+            -p 3000:3000 \
+            -v /home/ubuntu/.env:/app/.env \
+            --restart always \
+            $ECR_REGISTRY/$ECR_REPOSITORY:latest >> deployment-logs.log 2>&1
+        EOF
+        rm -f private_key

@@ -1,0 +1,115 @@
+@use 'sass:color';
+@use './variables' as v;
+
+// Reset and base styles
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: v.$text-color;
+  background-color: #fff;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+}
+
+// Typography
+h1, h2, h3, h4, h5, h6 {
+  margin-bottom: v.$spacing-md;
+  font-weight: v.$font-weight-semibold;
+  line-height: 1.2;
+  color: v.$text-color;
+}
+
+p {
+  margin-bottom: v.$spacing-md;
+}
+
+a {
+  color: v.$primary-color;
+  text-decoration: none;
+  transition: v.$transition-base;
+  
+  &:hover {
+    color: color.adjust(v.$primary-color, $lightness: -10%);
+    text-decoration: underline;
+  }
+}
+
+// Utility classes
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 v.$spacing-md;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.mt-1 { margin-top: v.$spacing-xs; }
+.mt-2 { margin-top: v.$spacing-sm; }
+.mt-3 { margin-top: v.$spacing-md; }
+.mt-4 { margin-top: v.$spacing-lg; }
+.mt-5 { margin-top: v.$spacing-xl; }
+
+.mb-1 { margin-bottom: v.$spacing-xs; }
+.mb-2 { margin-bottom: v.$spacing-sm; }
+.mb-3 { margin-bottom: v.$spacing-md; }
+.mb-4 { margin-bottom: v.$spacing-lg; }
+.mb-5 { margin-bottom: v.$spacing-xl; }
+
+.ml-1 { margin-left: v.$spacing-xs; }
+.ml-2 { margin-left: v.$spacing-sm; }
+.ml-3 { margin-left: v.$spacing-md; }
+.ml-4 { margin-left: v.$spacing-lg; }
+.ml-5 { margin-left: v.$spacing-xl; }
+
+.mr-1 { margin-right: v.$spacing-xs; }
+.mr-2 { margin-right: v.$spacing-sm; }
+.mr-3 { margin-right: v.$spacing-md; }
+.mr-4 { margin-right: v.$spacing-lg; }
+.mr-5 { margin-right: v.$spacing-xl; }
+
+.p-1 { padding: v.$spacing-xs; }
+.p-2 { padding: v.$spacing-sm; }
+.p-3 { padding: v.$spacing-md; }
+.p-4 { padding: v.$spacing-lg; }
+.p-5 { padding: v.$spacing-xl; }
